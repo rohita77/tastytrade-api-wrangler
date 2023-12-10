@@ -15,7 +15,8 @@ export default function Orders() {
       return <div>Loading...</div>
     }
 
-    const liveOrders = responseData
+    const liveOrders = (responseData ) ? context.tastytradeApi.httpClient.getJsonBuilder(responseData) : responseData;
+
 
     if (_.isNil(context.accountNumbers)) {
       return <p>Loading...</p>
@@ -41,7 +42,7 @@ export default function Orders() {
         return renderEmpty()
       }
 
-      <CustomTable rows={liveOrders} renderItem={renderOrderRow}/>
+      <CustomTable name="Orders" rows={liveOrders.json['data'] as any[]} renderItem={renderOrderRow} headerRow={liveOrders.json['keys'] as []}  csvUrl={liveOrders.json['csvUrl'] as string}/>
     }
     
     return (

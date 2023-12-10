@@ -1,7 +1,7 @@
 import TastytradeSession from "../models/tastytrade-session"
 import axios from "axios"
 import qs from 'qs'
-import { recursiveDasherizeKeys } from "../utils/json-util"
+import { JsonBuilder,JsonValue, recursiveDasherizeKeys } from "../utils/json-util"
 import _ from 'lodash'
 import https from 'https'
 import { MinTlsVersion } from "../utils/constants"
@@ -67,4 +67,11 @@ export default class TastytradeHttpClient{
     async deleteData(url: string, headers: object): Promise<any> {
         return this.executeRequest('delete', url, headers);
     }
+
+    getJsonBuilder(data : any) {
+      data;
+      return new JsonBuilder().add('data',data);
+    
+    }
+
 }

@@ -1,8 +1,9 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { AppContext } from '../contexts/context';
 import _ from 'lodash'
 import UseHttpRequest from '../components/use-http-request';
-import CustomTable from '../components/custom-table';
+import CustomTable, { RenderTableHeader, RenderTableRow } from '../components/custom-table';
+// import '../styles/global.css';
 
 export default function Positions() {
   const context = useContext(AppContext);
@@ -12,10 +13,10 @@ export default function Positions() {
   ), true)
 
   if (isLoading) {
-      return <div>Loading...</div>
-    }
+    return <div>Loading...</div>
+  }
 
-  const positions = responseData
+  const positions = (responseData) ? context.tastytradeApi.httpClient.getJsonBuilder(responseData) : responseData;
 
   if (_.isNil(context.accountNumbers)) {
     return <p>Loading...</p>
@@ -26,18 +27,17 @@ export default function Positions() {
       <div>
         <h1>Transactions for {context.accountNumbers[0]}</h1>
         No Positions
-        </div>
+      </div>
     )
   }
 
-  const renderPositionRow = (position: any) => (
-    <div>{position['quantity-direction']} {position.quantity} {position.symbol} {position['instrument-type']}</div>
-  )
+  const renderPositionRow = RenderTableRow;
 
   return (
-  <div>
+    <div>      
       <div className='text-lg font-bold mb-4'>Positions for {context.accountNumbers[0]}</div>
-        <CustomTable rows={positions} renderItem={renderPositionRow}/>
-  </div>
+
+      {<CustomTable name='Positions' rows={positions.json['data'] as any[]} renderItem={renderPositionRow} headerRow={positions.json['keys'] as []}  csvUrl={positions.json['csvUrl'] as string} />}
+    </div>
   );
 };

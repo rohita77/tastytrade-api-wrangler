@@ -20,11 +20,12 @@ async function fetchAccounts(context: TastytradeContext) {
   const accounts = await context.tastytradeApi.accountsAndCustomersService.getCustomerAccounts();
   const extractedAccountNumbers = accounts.map((item: any) => item.account['account-number']);
 
+  //TODO: Add UI to allow accept account number sellection
   if(extractedAccountNumbers.length){
-    context.accountNumbers = extractedAccountNumbers
+    context.accountNumbers = [extractedAccountNumbers[1]]
   }
 
-  return accounts
+  return [accounts[1]]
 }
 
 const Login = observer(() =>{

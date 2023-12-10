@@ -14,9 +14,51 @@ export class JsonBuilder {
     if ((_.isNil(value) || value === '') && !serializeEmpty) {
       return this
     }
-
-    this.json[key] = value
+    
+    this.json[key] = value;
+    
+    if (Array.isArray(value)) {
+      this.json['keys'] = getDistinctKeysFromAllArrayObjects(value as JsonValue[]);
+      this.json['csvUrl'] = convertJsonToCsv(value as JsonValue[],this.json['keys'] as string[] );
+      console.log(`CSV url is ${this.json['csvUrl']}`);
+    }
     return this
+  }
+
+}
+
+function getDistinctKeysFromAllArrayObjects(rows: any[]): string[] {
+
+  const allDistinctKeys = rows.reduce((keys: any, obj:any) => {
+    Object.keys(obj).forEach(key => {
+      keys.add(key);
+    });
+    return keys;
+  }, new Set());
+
+  return Array.from(allDistinctKeys);
+}
+
+
+export function convertJsonToCsv(jsonData: any[], headers: string[]) {
+  // Assuming jsonData is an array of objects
+  if (jsonData.length === 0) {
+    return '';
+  }
+
+  const csvRows = jsonData.map(row => headers.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(',')
+  );
+
+  csvRows.unshift(headers.join(',')); // Add header row
+  const csv = csvRows.join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+
+  return url ;
+
+  function replacer(key: any, value: any) {
+    // This function is for escaping values that might contain commas or line breaks
+    return value;
   }
 }
 

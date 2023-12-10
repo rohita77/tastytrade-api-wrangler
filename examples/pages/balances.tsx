@@ -15,7 +15,7 @@ export default function Balances() {
         return <div>Loading...</div>
       }
 
-    const balances = responseData
+    const balances = (responseData) ? context.tastytradeApi.httpClient.getJsonBuilder([responseData]) : responseData;
 
     if (_.isNil(context.accountNumbers)) {
       return <p>Loading...</p>
@@ -30,11 +30,13 @@ export default function Balances() {
         )
       }
   
+    const data = Array.isArray(balances.json['data']) ? balances.json['data'][0] : undefined;
+
     return (
-    <div>
+    <>
         <div className='text-lg font-bold mb-4'>Balances for {context.accountNumbers[0]}</div>
         {errorMessage && <div>{errorMessage}</div>}
-        <ObjectPropertiesTable item={balances}/>
-    </div>
+        <ObjectPropertiesTable name='Balances' item={data as object} csvUrl={balances.json['csvUrl'] as string} />
+    </>
     );
 };
