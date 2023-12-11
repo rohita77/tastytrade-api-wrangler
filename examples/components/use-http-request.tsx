@@ -24,11 +24,10 @@ export default function UseHttpRequest(httpRequestor: (input:any) => any, onMoun
     }
   }
 
-  if (onMount) {
     useEffect(() => {
+      if (onMount) {
       executeRequest(defaultInput);
-    }, []);
-  }
-
+    }
+    }, []);44
   return { isLoading, errorMessage, executeRequest, responseData }
 }

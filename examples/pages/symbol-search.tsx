@@ -17,7 +17,7 @@ function parseError(error:any){
     }
 }
 
-export default function symbolSearch() {
+export default function SymbolSearch() {
     const [symbol, setSymbol] = useState('');
     const [symbolData, setSymbolData] = useState<null | object>(null)
     const [error, setError] = useState("");
