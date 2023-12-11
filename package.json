@@ -17,7 +17,8 @@
     "integration-test": "jest --testPathPattern=tests/integration",
     "lint": "eslint lib/** tests/**",
     "prepublishOnly": "npm run unit-test && npm run build",
-    "postpack": "git tag -a $npm_package_version -m $npm_package_version && git push origin $npm_package_version"
+    "postpack": "git tag -a $npm_package_version -m $npm_package_version && git push origin $npm_package_version",
+    "start": "npm --prefix ./examples start"
   },
   "dependencies": {
     "@tastytrade/api": "^3.0.0",
