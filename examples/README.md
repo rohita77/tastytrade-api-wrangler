@@ -16,7 +16,7 @@ npm run dev
 
 Any time you make changes to the code in the package (i.e. any code in `lib/`), you need to re-run `npm run build`.
 
-//TODO: Deploy to Azure
+//TODO: Deploy to Azure:
 //TODO: Github workflow to deploy to Azure
 
 ## Increment version for changes

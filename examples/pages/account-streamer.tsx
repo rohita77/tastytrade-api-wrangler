@@ -42,17 +42,17 @@ const AccountStreamerPage: NextPage = () => {
       setStreamerState(accountStreamer.streamerState)
     })
 
-    const streamerMessageDisposer = accountStreamer.addMessageObserver((type, action, status) => {
-      if (!_.isNil(type)) {
-        toast.success(`Received ${type} message`)
-      } else {
-        toast(`Received message with action: ${action}, status: ${status}`)
-      }
-    })
+    // const streamerMessageDisposer = accountStreamer.addMessageObserver((type, action, status): void => {
+    //   if (!_.isNil(type)) {
+    //     toast.success(`Received ${type} message`)
+    //   } else {
+    //     toast(`Received message with action: ${action}, status: ${status}`)
+    //   }
+    // } ) 
 
     return () => {
       accountStreamer.stop()
-      streamerMessageDisposer()
+      // streamerMessageDisposer()
       streamerStateDisposer()
     }
   }, []);
@@ -103,9 +103,9 @@ const AccountStreamerPage: NextPage = () => {
         <div className='mb-2'>All messages will be logged to the console.</div>
         {_renderStartStop()}
         <div className='my-5'>
-          <div>Your account numbers:</div>
-          {context.accountNumbers!.map((accountNumber) => (
-            <div>{accountNumber}</div>
+          <div  >Your account numbers:</div>
+          {context.accountNumbers!.map((accountNumber, index) => (
+            <div key={index}>{accountNumber}</div>
           ))}
         </div>
         {_renderSubscribe()}

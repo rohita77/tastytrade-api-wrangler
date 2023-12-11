@@ -33,7 +33,8 @@ export default function AccountStatus() {
   <div>
       <div className='text-lg font-bold mb-4'>Account Statuses for {context.accountNumbers![0]}</div>
       {errorMessage && <div>{errorMessage}</div>}
-      <ObjectPropertiesTable item={accountStatus}/>
+      <ObjectPropertiesTable name = 'Account Status' item={accountStatus} csvUrl=''/>
+
   </div>
   );
-};
+}
