@@ -11,7 +11,8 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build-front-end": "cd ./examples && npm install && npm run build",
+    "build": "tsc -p tsconfig.json && npm run build-front-end",
     "test": "jest -i --restoreMocks",
     "unit-test": "jest --testPathPattern=tests/unit",
     "integration-test": "jest --testPathPattern=tests/integration",
